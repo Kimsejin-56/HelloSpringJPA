@@ -120,5 +120,9 @@
         </tbody>
     </table>
 
+    <footer style="margin-top:20px; border-top:1px solid #ccc; padding-top:10px;">
+        <p th:text="${'실습 수행 일시: ' + #temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+        <p>학번: 2171234 | 성명: 김세진</p>
+    </footer>
 </body>
 </html>
