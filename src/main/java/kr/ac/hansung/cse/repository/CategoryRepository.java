@@ -48,8 +48,9 @@ public class CategoryRepository {
     }
 
     public long countProductsByCategoryId(Long categoryId) {
-        return em.createQuery("select count(p) from Product p " +
-                        "where p.category.id = :categoryId", Long.class)
+        return em
+                .createQuery("select count(p) from Product p " +
+                                "where p.category.id = :categoryId", Long.class)
                 .setParameter("categoryId", categoryId)
                 .getSingleResult();
     }

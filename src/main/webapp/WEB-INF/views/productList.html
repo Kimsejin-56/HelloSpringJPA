@@ -17,6 +17,31 @@
         h1 { border-bottom: 2px solid #4a90d9; padding-bottom: 10px; color: #2c3e50; }
         .btn { display: inline-block; padding: 8px 16px; background: #4a90d9; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 16px; }
         .btn:hover { background: #357abd; }
+
+        /* 카테고리 관리 버튼용 보조 스타일 */
+        .btn-secondary { background: #6c757d; margin-left: 8px; }
+        .btn-secondary:hover { background: #545b62; }
+
+        /* 검색 박스 스타일 */
+        .search-box { margin: 16px 0 24px; padding: 16px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; }
+        .search-box form { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .search-box input[type="text"],
+        .search-box select {
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .search-box button {
+            padding: 10px 18px;
+            border: none;
+            background: #4a90d9;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-box button:hover { background: #357abd; }
+
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th { background: #4a90d9; color: white; padding: 12px; text-align: left; }
         td { padding: 10px 12px; border-bottom: 1px solid #ddd; vertical-align: middle; }
@@ -47,10 +72,38 @@
         <span th:text="${successMessage}">성공 메시지</span>
     </div>
 
+    <!-- 상품 등록 버튼 + 카테고리 관리 버튼 -->
     <a class="btn" th:href="@{/products/create}">+ 새 상품 등록</a>
+    <a class="btn btn-secondary" th:href="@{/categories}">카테고리 관리</a>
 
+    <!-- 검색 기능 영역 -->
+    <div class="search-box">
+        <form th:action="@{/products}" method="get">
+
+            <!-- 상품명 키워드 검색 -->
+            <input type="text"
+                   name="keyword"
+                   th:value="${keyword}"
+                   placeholder="상품명 검색" />
+
+            <!-- 카테고리 필터 -->
+            <select name="categoryId">
+                <option value="">-- 전체 카테고리 --</option>
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.id}"
+                        th:text="${cat.name}"
+                        th:selected="${cat.id == categoryId}">
+                    카테고리명
+                </option>
+            </select>
+
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+    <!-- 검색 결과 없음 메시지 -->
     <div class="empty-msg" th:if="${#lists.isEmpty(products)}">
-        등록된 상품이 없습니다. 새 상품을 등록해 주세요.
+        검색 결과가 없습니다.
     </div>
 
     <table th:unless="${#lists.isEmpty(products)}">
