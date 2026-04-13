@@ -46,5 +46,19 @@ public class CategoryRepository {
                 .getResultList();
         return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
     }
+
+    public long countProductsByCategoryId(Long categoryId) {
+        return em.createQuery("select count(p) from Product p " +
+                        "where p.category.id = :categoryId", Long.class)
+                .setParameter("categoryId", categoryId)
+                .getSingleResult();
+    }
+
+    public void delete(Long id) {
+        Category category = em.find(Category.class, id);
+        if (category != null) {
+            em.remove(category);
+        }
+    }
 }
 
