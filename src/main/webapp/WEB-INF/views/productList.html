@@ -102,8 +102,14 @@
     </div>
 
     <!-- 검색 결과 없음 메시지 -->
-    <div class="empty-msg" th:if="${#lists.isEmpty(products)}">
+    <div class="empty-msg"
+         th:if="${#lists.isEmpty(products) and ((keyword != null and !#strings.isEmpty(keyword)) or categoryId != null)}">
         검색 결과가 없습니다.
+    </div>
+
+    <div class="empty-msg"
+         th:if="${#lists.isEmpty(products) and ((keyword == null or #strings.isEmpty(keyword)) and categoryId == null)}">
+        등록된 상품이 없습니다. 새 상품을 등록해 주세요.
     </div>
 
     <table th:unless="${#lists.isEmpty(products)}">
